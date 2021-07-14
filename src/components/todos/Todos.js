@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '../UI/Card'
 import Input from '../UI/Input'
 import SingleTodo from './SingleTodo'
@@ -25,14 +25,22 @@ const sampleTodos = [
 
 
 export default function Todos() {
+    const [activeFilter, setActiveFilter] = useState('all')
+
+    function handleFilterChange(filter) {
+        setActiveFilter(filter)
+    }
+
     return (
         <div>
             <Card title="todo list">
                 <Input/>
-                <FilterTodos/>
+                <FilterTodos activeFilter={activeFilter} handleFilterChange={handleFilterChange}/>
+                <ul className='list'>
                 {sampleTodos.map(todo => {
-                    return <SingleTodo/>
+                    return <SingleTodo key={todo.id} completed={todo.completed} text={todo.text}/>
                 })}
+                </ul>
             </Card>
         </div>
     )

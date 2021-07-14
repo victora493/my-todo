@@ -1,21 +1,22 @@
 import React from 'react'
 
-export default function FilterTodos() {
+const filters = [
+    'all',
+    'active',
+    'completed',
+    'important',
+]
+
+export default function FilterTodos({handleFilterChange, activeFilter}) {
     return (
-        <div className='pull-right'>
+        <div className='filters-container'>
             <div class="filters list-unlisted clearfix">
-                <li>
-                    <a className='selected'>All</a>
-                </li>
-                <li>
-                    <a>Active</a>
-                </li>
-                <li>
-                    <a>completed</a>
-                </li>
-                <li>
-                    <a>important</a>
-                </li>
+                {filters.map(filter => {
+                    return <li onClick={() => handleFilterChange(filter)}>
+                        <a className={activeFilter === filter ? 'selected' : ''}>{filter}</a>
+                    </li>
+                }
+                )}
             </div>            
         </div>
     )
