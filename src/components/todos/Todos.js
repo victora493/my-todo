@@ -1,45 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Card from '../UI/Card'
 import Input from '../UI/Input'
 import SingleTodo from './SingleTodo'
 import FilterTodos from './FilterTodos'
+import TodoContext from '../../store/todo-context'
 
-
-const sampleTodos = [
-        {
-            id: 1,
-            text: 'Learn Javascript',
-            completed: false
-        },
-        {
-            id: 2,
-            text: 'Learn React',
-            completed: false
-        },
-        {
-            id: 3,
-            text: 'Build a React App',
-            completed: false
-        }
-    ]
-
+const filters = [
+    'all',
+    'active',
+    'completed',
+    'important',
+]
 
 export default function Todos() {
-    const [activeFilter, setActiveFilter] = useState('all')
+    const {items, addItem} = useContext(TodoContext)
+    const [activeFilter, setActiveFilter] = useState(filters[0])
 
     function handleFilterChange(filter) {
         setActiveFilter(filter)
     }
 
+    function renderTodos() {
+        if(items.length === 0) return <p>There are no todos</p>
+
+        return (items?.map(todo =>  <SingleTodo key={todo.id} id={todo.id} completed={todo.completed} text={todo.text}/>))
+    }
+
     return (
         <div>
             <Card title="todo list">
-                <Input/>
-                <FilterTodos activeFilter={activeFilter} handleFilterChange={handleFilterChange}/>
+                <Input addItem={addItem}/>
+                <FilterTodos filters={filters} activeFilter={activeFilter} handleFilterChange={handleFilterChange}/>
                 <ul className='list'>
-                {sampleTodos.map(todo => {
-                    return <SingleTodo key={todo.id} completed={todo.completed} text={todo.text}/>
-                })}
+                {renderTodos()}
                 </ul>
             </Card>
         </div>

@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import TodoContext from '../../store/todo-context'
 
-export default function SingleTodo({text}) {
-    // const className = 'todo-item ui-state-default ' + (data.completed === true ? 'completed' : 'pending');
+export default function SingleTodo({text, id, completed}) {
+    const { removeItem } = useContext(TodoContext)
 
-    // <li className={className}>
+    function handleItemRemoval() {
+        removeItem(id)
+    }
+
     return (
         <li className='todo-item ui-state-default '>
-            <div className="checkbox">
-                <input type="checkbox"/>
-                <label>
+            <div className="checkbox-wrapper">
+                <input defaultChecked={completed} id={text} type="checkbox"/>
+                <label htmlFor={text}>
                     {text}
                 </label>
             </div>
+            <button onClick={handleItemRemoval}>Delete</button>
         </li>
     )
 }

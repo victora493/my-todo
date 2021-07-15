@@ -1,10 +1,10 @@
 import React from 'react';
 
 const TodoContext = React.createContext({
-  todos: [],
+  items: [],
   totalAmount: 0,
-  toggleMarkAsDone: (item) => {},
-  toggleMarkAsImportant: (item) => {},
+  toggleMarkAsDone: (id) => {},
+  toggleMarkAsImportant: (id) => {},
   addItem: (item) => {},
   removeItem: (id) => {}
 });

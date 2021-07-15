@@ -10,9 +10,10 @@ const defaultTodoState = {
 const todoReducer = (state, action) => {
   if (action.type === 'ADD_ITEM') {
     const newItem = {
-        id: new Date.now(),
+        id: Date.now(),
         text: action.itemText,
-        completed: false
+        completed: false,
+        important: false,
     }
 
     const updatedItems = [...state.items, newItem];
@@ -25,6 +26,16 @@ const todoReducer = (state, action) => {
     };
   }
   if (action.type === 'REMOVE_ITEM') {
+    const updatedItems = state.items.filter(item => item.id !== action.id);
+
+    const updatedTotalAmount = updatedItems.length;
+
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount
+    };
+  }
+  if (action.type === 'MARK_DONE') {
     const updatedItems = state.items.filter(item => item.id !== action.id);
 
     const updatedTotalAmount = updatedItems.length;

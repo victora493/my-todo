@@ -1,9 +1,13 @@
 import React, {useState} from 'react'
 
-export default function Input() {
+export default function Input({ addItem }) {
+    const [value, setValue] = useState('')
 
     function handleSubmit(e) {
         e.preventDefault()
+
+        addItem(value)
+        setValue('')
     }
 
     return (
@@ -14,6 +18,8 @@ export default function Input() {
                     type="text"
                     className="form-control add-todo"
                     placeholder="Add New"
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
                 />
             </form>
         </>

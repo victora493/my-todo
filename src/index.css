@@ -160,3 +160,18 @@ footer .buttons {
     border: 1px solid rgba(229, 229, 229, 0.5);
     color: #888;
 }
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 0;
+}
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+}
+.checkbox-wrapper > input {
+    margin-right: 6px;
+}
