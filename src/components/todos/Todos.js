@@ -17,8 +17,11 @@ export default function Todos() {
     const [activeFilter, setActiveFilter] = useState(filters[0])
 
     function handleFilterChange(filter) {
+        // need to actually filter the data
         setActiveFilter(filter)
     }
+
+    // need to also allow user to mark as completed
 
     function renderTodos() {
         if(items.length === 0) return <p>There are no todos</p>

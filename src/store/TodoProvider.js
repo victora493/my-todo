@@ -1,6 +1,6 @@
-import { useReducer } from 'react';
-
+import { useReducer, useEffect } from 'react';
 import TodoContext from './todo-context';
+import {saveState, loadState} from '../localStorage'
 
 const defaultTodoState = {
   items: [],
@@ -8,6 +8,9 @@ const defaultTodoState = {
 };
 
 const todoReducer = (state, action) => {
+  if (action.type === 'SET_STATE') {
+    return action.state;
+  }
   if (action.type === 'ADD_ITEM') {
     const newItem = {
         id: Date.now(),
@@ -16,34 +19,45 @@ const todoReducer = (state, action) => {
         important: false,
     }
 
-    const updatedItems = [...state.items, newItem];
+    const updatedItems = [newItem, ...state.items];
  
     const updatedTotalAmount = updatedItems.length;
 
-    return {
+    const finalState = {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
-    };
+    }
+    saveState(finalState, 'todos')
+    return finalState;
   }
   if (action.type === 'REMOVE_ITEM') {
     const updatedItems = state.items.filter(item => item.id !== action.id);
 
     const updatedTotalAmount = updatedItems.length;
 
-    return {
+    const finalState = {
       items: updatedItems,
-      totalAmount: updatedTotalAmount
-    };
+      totalAmount: updatedTotalAmount,
+    }
+    saveState(finalState, 'todos')
+    return finalState;
   }
-  if (action.type === 'MARK_DONE') {
-    const updatedItems = state.items.filter(item => item.id !== action.id);
-
+  if (action.type === 'TOGGLE_DONE') {
+    const itemIdx = state.items.findIndex(item => item.id === action.id)
+    const existingItem = {...state.items[itemIdx]}
+    const updatedItem = {...existingItem, completed: !existingItem.completed}
+    
+    const updatedItems = [...state.items]
+    updatedItems[itemIdx] = updatedItem;
+ 
     const updatedTotalAmount = updatedItems.length;
 
-    return {
+    const finalState = {
       items: updatedItems,
-      totalAmount: updatedTotalAmount
-    };
+      totalAmount: updatedTotalAmount,
+    }
+    saveState(finalState, 'todos')
+    return finalState;
   }
 
   return defaultTodoState;
@@ -54,6 +68,15 @@ const TodoProvider = (props) => {
         todoReducer,
         defaultTodoState
     );
+
+    useEffect(() => {
+      const state = loadState('todos')
+      setLoadedState(state)
+    }, [])
+
+    const setLoadedState = (state) => {
+        dispatchTodoAction({ type: 'SET_STATE', state });
+    }
 
     const toggleMarkAsDone = (id) => {
         dispatchTodoAction({ type: 'TOGGLE_DONE', id });
