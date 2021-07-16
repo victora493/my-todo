@@ -175,3 +175,35 @@ footer .buttons {
 .checkbox-wrapper > input {
     margin-right: 6px;
 }
+
+.input-err {
+    margin: 0;
+    padding: 0;
+    color: red;
+    font-size: 12px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+}
+.buttons > *:not(:first-child) {
+    margin-left: 5px;
+}
+.start-container {
+    display: flex;
+    align-items: center;
+    height: auto;
+    padding: 2px;
+    cursor: pointer;
+}
+.start-btn {
+    height: 100%;
+    font-size: 1.5rem;
+}
+.start-btn:hover {
+}
+.start-btn.selected {
+    color: #f4d03f;
+    fill: #f4d03f;
+}

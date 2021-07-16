@@ -59,6 +59,23 @@ const todoReducer = (state, action) => {
     saveState(finalState, 'todos')
     return finalState;
   }
+  if (action.type === 'TOGGLE_IMPORTANT') {
+    const itemIdx = state.items.findIndex(item => item.id === action.id)
+    const existingItem = {...state.items[itemIdx]}
+    const updatedItem = {...existingItem, important: !existingItem.important}
+    
+    const updatedItems = [...state.items]
+    updatedItems[itemIdx] = updatedItem;
+
+    const updatedTotalAmount = updatedItems.length;
+
+    const finalState = {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
+    }
+    saveState(finalState, 'todos')
+    return finalState;
+  }
 
   return defaultTodoState;
 };
