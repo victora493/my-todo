@@ -3,4 +3,6 @@ Features:
 - add as many todos as you want
 - mark them as completed
 - mark them as important
+- delete any todo
 - filter by completer, important, all and unfinished
+- persisting state using local storage
