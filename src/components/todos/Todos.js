@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Card from '../UI/Card'
 import Input from '../UI/Input'
 import SingleTodo from './SingleTodo'
@@ -17,7 +17,11 @@ export default function Todos() {
     const {items, addItem} = useContext(TodoContext)
     const [activeFilter, setActiveFilter] = useState(filters[0])
 
+    let { hash } = useLocation();
+    let history = useHistory();
+
     useEffect(() => {
+        setActiveFilter(hash.slice(1))
     }, [items])
 
     function handleFilterChange(filter) {
