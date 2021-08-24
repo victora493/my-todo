@@ -112,8 +112,8 @@ const TodoProvider = (props) => {
     }
 
     const todoContext = {
-        items: todoState.items,
-        totalAmount: todoState.totalAmount,
+        items: todoState?.items || [],
+        totalAmount: todoState?.totalAmount || 0,
         toggleMarkAsDone,
         toggleMarkAsImportant,
         addItem,
