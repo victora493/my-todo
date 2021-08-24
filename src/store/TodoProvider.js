@@ -7,7 +7,7 @@ const defaultTodoState = {
   totalAmount: 0,
 };
 
-const todoReducer = (state, action) => {
+const todoReducer = (state = defaultTodoState, action) => {
   if (action.type === 'SET_STATE') {
     return action.state;
   }
@@ -19,7 +19,7 @@ const todoReducer = (state, action) => {
         important: false,
     }
 
-    const updatedItems = [newItem, ...state.items];
+    const updatedItems = [newItem, ...state?.items];
  
     const updatedTotalAmount = updatedItems.length;
 
